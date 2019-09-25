@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hire</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="logo.ico" />
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Bootstrap core CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel ="stylesheet" href="home.css">
+ <style>
+ .note
+{
+    text-align: center;
+    height: 80px;
+    background: -webkit-linear-gradient(left, #0072ff, #8811c5);
+    color: #fff;
+    font-weight: bold;
+    line-height: 80px;
+}
+.form-content
+{
+    padding: 2%;
+    
+    margin-bottom: 2%;
+}
+.form-control{
+    border-radius:1.5rem;
+}
+.btnSubmit
+{
+    border:none;
+    border-radius:1.5rem;
+    padding: 1%;
+    width: 20%;
+    cursor: pointer;
+    background: #0062cc;
+    color: #fff;
+}
+ 
+ 
+ </style>
+</head>
+
+<body>
+
+
+<nav class="navbar noshadow navbar-expand-lg navbar-light position-control scrolling-navbar smooth ">
+    <a class="navbar-brand mr-0" href="#" >
+      <img src="svg/logo.svg" height="130" alt="logo" class="l1 mr-4 d-sm-none d-lg-inline-block d-md-inline-block d-none  " style="margin-left: 50px">
+      
+      <img src="svg/logo.svg" height="40" alt="logo" class=" mr-0 d-inline-block d-lg-none d-md-none ">
+  </a>
+  <a class="navbar-brand mt-2 " href="#">
+      <object data="svg/name.svg" type="image/svg+xml" height="50" alt="logo" class=" l2  d-sm-none d-lg-inline-block d-none ml-5 d-md-inline-block"></object>
+      <object data="svg/name.svg" type="image/svg+xml" height="20" alt="logo" class=" d-inline-block d-lg-none d-md-none "></object>
+    </a>
+    <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto  ">
+        <li class="nav-item  ml-2 mr-2 ">
+          <a class="nav-link scheme-text " href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item ml-2 mr-2">
+          <a class="nav-link scheme-text" href="#About">About</a>
+        </li>
+        
+        <li class="nav-item ml-2 mr-2">
+          <a class="nav-link scheme-text " href="#contact">Contact</a>
+        </li>
+        <li class="nav-item ml-2 mr-2">
+          <a class="nav-link scheme-text " href="#">Help</a>
+        </li>
+        <li class="nav-item ml-2 mr-2">
+            
+                <a class="nav-link scheme-text active" href="#" >Login</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container   col-8  mt-4 register-form">
+     
+      <form id="login">
+    <div class="form container col-8 bg-schme  jumbotron">
+            <h3 class="text-white text-center">Login to Start Your Journey</h3>
+        <!-- <div class="note">
+            <p>This is a simpleRegister Form made using Boostrap.</p>
+        </div> -->
+
+        <div class="form-content mt-4">
+            <div class="row">
+               
+                <div class="col-md-8 ">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="username" placeholder="User Name" value=""/>
+                    </div>
+                </div>
+               
+                <div class="col-md-8 ">
+                    <div class="form-group">
+                        <input type="password" class="form-control"id="password" placeholder="Your Password *" value=""/>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="btn pink" value="Login">
+        </div>
+    </div>
+</form>
+</div>
+
+
+
+</div>
+
+
+</body>  
+<script>
+        $( document ).ready(function() {
+            $("#login").submit(function(){
+                event.preventDefault();
+                
+                const username = $("#username").val();
+               
+                const password = $("#password").val();
+               
+                
+                const body =JSON.stringify({username,password})
+                fetch("http://localhost:3000/api/users/login", {
+                    method: 'POST', 
+                   
+                    body:body, // data can be `string` or {object}!
+                    headers:{
+                      'Content-Type': 'application/json'
+                    }
+                  }).then(res => res.json())
+                  .then(res => {alert("You are  successfully login  "+res.user.username);
+                                
+                                     window.location.href = `dashboard.html?userName=${res.user.username}/role=${res.user.role}`;
+                                        })
+                   
+                
+                
+                  .catch(error => alert( error))
+        
+        
+                
+               
+                
+            })
+        })
+            
+        
+</script>       
+        
