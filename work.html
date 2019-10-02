@@ -56,12 +56,11 @@
 <body>
 
 
-<nav class="navbar noshadow navbar-expand-lg navbar-light position-control scrolling-navbar smooth ">
+<nav class="navbar noshadow navbar-expand-lg navbar-light  ">
     <a class="navbar-brand mr-0" href="#" >
-      <img src="svg/logo.svg" height="130" alt="logo" class="l1 mr-4 d-sm-none d-lg-inline-block d-md-inline-block d-none  " style="margin-left: 50px">
       
-      <img src="svg/logo.svg" height="40" alt="logo" class=" mr-0 d-inline-block d-lg-none d-md-none ">
-  </a>
+        <img src="svg/logo.svg" height="60" alt="logo" class=" mr-0  ">
+    </a>
   <a class="navbar-brand mt-2 " href="#">
       <object data="svg/name.svg" type="image/svg+xml" height="50" alt="logo" class=" l2  d-sm-none d-lg-inline-block d-none ml-5 d-md-inline-block"></object>
       <object data="svg/name.svg" type="image/svg+xml" height="20" alt="logo" class=" d-inline-block d-lg-none d-md-none "></object>
@@ -93,7 +92,7 @@
     </div>
   </nav>
   <div class="container bg-schme  jumbotron text-center col-8 mt-4 register-form">
-      <h3 class="text-white text-center ">Sign In To Get Your Work Done</h3>
+      <h3 class="text-white text-center ">Sign Up To Get Your Work Done</h3>
       <form id="work">
     <div class="form">
         <!-- <div class="note">
@@ -128,6 +127,9 @@
                 </div>
             </div>
             <input type="submit" class="btn pink" value="Register">
+            <p class="text-white mt-2"> or Have Account Already then <a  class="p-2 pink  text-white" role ="button" href="login.html">login</a>
+        
+            </p> 
         </div>
     </div>
     </form>
@@ -150,18 +152,23 @@ $( document ).ready(function() {
         const role = "seller";
         const confirmpassword = $("#confirmpassword").val();
         const body =JSON.stringify({name,username,email,password,confirmpassword,role})
-        fetch("http://localhost:3000/api/users/register", {
-            method: 'POST', 
-           
-            body:body, // data can be `string` or {object}!
-            headers:{
-              'Content-Type': 'application/json'
-            }
-          }).then(res => res.json())
-          .then(response => {alert("You are register Redirecting to login")
-                             window.location.href = 'login.html';
-                                })
-                                .catch(error => alert( error))
+        $.ajax({
+                  type: 'post',
+                  url: 'http://localhost:3000/api/users/register',   
+                  data: body,
+                  xhrFields: {
+                      withCredentials: false
+                  },  
+                  headers: {
+                    "content-type": "application/json"
+                  }, 
+                  success: function (data) {
+                    window.location.href = `dashboard.html?userName=${data.user.username}/role=${data.user.role}`;
+                  },  
+                  error: function (response) {
+                    alert(response.responseJSON.msg);
+                  }
+                })
         
         })
           

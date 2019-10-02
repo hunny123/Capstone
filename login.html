@@ -18,6 +18,7 @@
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
  <link rel ="stylesheet" href="home.css">
  <style>
  .note
@@ -56,12 +57,11 @@
 <body>
 
 
-<nav class="navbar noshadow navbar-expand-lg navbar-light position-control scrolling-navbar smooth ">
-    <a class="navbar-brand mr-0" href="#" >
-      <img src="svg/logo.svg" height="130" alt="logo" class="l1 mr-4 d-sm-none d-lg-inline-block d-md-inline-block d-none  " style="margin-left: 50px">
+<nav class="navbar noshadow navbar-expand-lg navbar-light  ">
+  <a class="navbar-brand mr-0" href="#" >
       
-      <img src="svg/logo.svg" height="40" alt="logo" class=" mr-0 d-inline-block d-lg-none d-md-none ">
-  </a>
+    <img src="svg/logo.svg" height="60" alt="logo" class=" mr-0  ">
+</a>
   <a class="navbar-brand mt-2 " href="#">
       <object data="svg/name.svg" type="image/svg+xml" height="50" alt="logo" class=" l2  d-sm-none d-lg-inline-block d-none ml-5 d-md-inline-block"></object>
       <object data="svg/name.svg" type="image/svg+xml" height="20" alt="logo" class=" d-inline-block d-lg-none d-md-none "></object>
@@ -116,7 +116,9 @@
                     </div>
                 </div>
             </div>
-            <input type="submit" class="btn pink" value="Login">
+            <input type="submit" class="btn pink" value="Login"> <a class="text-white">or </a >
+            <a type="button" class="pink p-2 btn text-white "  href="hire.html">Sign up to Get Hire</a>
+            <a type="button" class="pink p-2 btn text-white" href="work.html">Sign up to Get Work done</a>
         </div>
     </div>
 </form>
@@ -139,24 +141,31 @@
                
                 
                 const body =JSON.stringify({username,password})
-                fetch("http://localhost:3000/api/users/login", {
-                    method: 'POST', 
-                   
-                    body:body, // data can be `string` or {object}!
-                    headers:{
-                      'Content-Type': 'application/json'
-                    }
-                  }).then(res => res.json())
-                  .then(res => {alert("You are  successfully login  "+res.user.username);
-                                
-                                     window.location.href = `dashboard.html?userName=${res.user.username}/role=${res.user.role}`;
-                                        })
-                   
+                // $.post( "http://localhost:3000/api/users/login", body)
+                //  .done(( data )=> {
+                //   window.location.href = `dashboard.html?userName=${data.user.username}/role=${data.user.role}`
+                // }).fail((error)=> {
+                //   console.log(body)
+                //     alert( error.responseJSON.msg );
+                // })
+            $.ajax({
+            type: 'post',
+            url: 'http://localhost:3000/api/users/login',   
+            data: body,
+            xhrFields: {
+                withCredentials: false
+            },  
+            headers: {
+              "content-type": "application/json"
+            }, 
+            success: function (data) {
+              window.location.href = `dashboard.html?userName=${data.user.username}/role=${data.user.role}`;
+            },  
+            error: function (response) {
+               alert(response.responseJSON.msg);
+            }
+        })
                 
-                
-                  .catch(error => alert( error))
-        
-        
                 
                
                 
