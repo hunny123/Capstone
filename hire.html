@@ -163,7 +163,7 @@
                     "content-type": "application/json"
                   }, 
                   success: function (data) {
-                    window.location.href = `dashboard.html?userName=${data.user.username}/role=${data.user.role}`;
+                    window.location.href = `dashboard.html?userName=${body.username}?role=${body.username}`;
                   },  
                   error: function (response) {
                     alert(response.responseJSON.msg);
