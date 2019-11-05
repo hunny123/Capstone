@@ -159,6 +159,8 @@
               "content-type": "application/json"
             }, 
             success: function (data) {
+              window.localStorage.setItem('user',JSON.stringify(data.user));
+              window.localStorage.setItem('userToken',data.token)
               window.location.href = `dashboard.html?userName=${data.user.username}/role=${data.user.role}`;
             },  
             error: function (response) {
